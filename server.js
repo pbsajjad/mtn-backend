@@ -55,13 +55,13 @@ app.post("/api/validate", (req, res) => {
     fa: [
       {
         id: "PSMN",
-        title: "بانک سامان",
+        name: "بانک سامان",
         imageURL:
           "https://apishop.irancell.ir/static/v2/images/bankIcon/PSMN.png"
       },
       {
         id: "MLT",
-        title: "بانک ملت",
+        name: "بانک ملت",
         imageURL:
           "https://apishop.irancell.ir/static/v2/images/bankIcon/MLT.png"
       }
@@ -69,13 +69,13 @@ app.post("/api/validate", (req, res) => {
     en: [
       {
         id: "PSMN",
-        title: "Pardakht Saman",
+        name: "Pardakht Saman",
         imageURL:
           "https://apishop.irancell.ir/static/v2/images/bankIcon/PSMN.png"
       },
       {
         id: "MLT",
-        title: "Mellat Bank",
+        name: "Mellat Bank",
         imageURL:
           "https://apishop.irancell.ir/static/v2/images/bankIcon/MLT.png"
       }
