@@ -82,6 +82,7 @@ app.post("/api/validate", (req, res) => {
     ]
   };
 
+  const lang = req.query.lang || "en";
   let errorKey = "";
   const { mobile, email, chargeAmount } = req.body;
 
@@ -103,12 +104,10 @@ app.post("/api/validate", (req, res) => {
   }
 
   if (!errorKey) {
-    res.send(JSON.stringify({ valid: true, banks }));
+    res.send(JSON.stringify({ valid: true, banks: banks[lang] }));
   } else {
     res.send(JSON.stringify({ valid: false, errorKey }));
   }
-
-  console.log(req.body);
 });
 
 app.listen(5500);
