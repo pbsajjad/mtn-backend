@@ -48,4 +48,67 @@ app.get("/api/settings", (req, res) => {
   res.end(JSON.stringify(menu[lang]));
 });
 
-app.listen(5000);
+app.post("/api/validate", (req, res) => {
+  const MIN_CHARGE = 10000;
+  const MAX_CHARGE = 900000;
+  const banks = {
+    fa: [
+      {
+        id: "PSMN",
+        title: "بانک سامان",
+        imageURL:
+          "https://apishop.irancell.ir/static/v2/images/bankIcon/PSMN.png"
+      },
+      {
+        id: "MLT",
+        title: "بانک ملت",
+        imageURL:
+          "https://apishop.irancell.ir/static/v2/images/bankIcon/MLT.png"
+      }
+    ],
+    en: [
+      {
+        id: "PSMN",
+        title: "Pardakht Saman",
+        imageURL:
+          "https://apishop.irancell.ir/static/v2/images/bankIcon/PSMN.png"
+      },
+      {
+        id: "MLT",
+        title: "Mellat Bank",
+        imageURL:
+          "https://apishop.irancell.ir/static/v2/images/bankIcon/MLT.png"
+      }
+    ]
+  };
+
+  let errorKey = "";
+  const { mobile, email, chargeAmount } = req.body;
+
+  if (!/^09[0-9]{9}$/.test(mobile)) {
+    errorKey = "invalidMobile";
+  } else if (email && !/^[a-b0-9_]+@[a-z]{2,3}$/i.test(email)) {
+    errorKey = "invalidEmail";
+  }
+
+  if (!/09[0-9]{9}/g.test(mobile)) {
+    errorKey = "invalidMobile";
+  } else if (!(MIN_CHARGE <= chargeAmount && chargeAmount <= MAX_CHARGE)) {
+    errorKey = "invalidAmount";
+  } else if (
+    email &&
+    !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)
+  ) {
+    errorKey = "invalidEmail";
+  }
+
+  if (!errorKey) {
+    res.send(JSON.stringify({ valid: true, banks }));
+  } else {
+    res.send(JSON.stringify({ valid: false, errorKey }));
+  }
+
+  console.log(req.body);
+});
+
+app.listen(5500);
